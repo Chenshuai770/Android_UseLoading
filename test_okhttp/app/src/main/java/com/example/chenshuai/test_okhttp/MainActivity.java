@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ListView;
 
-import com.example.chenshuai.test_okhttp.entity.test_Gson;
+import com.example.chenshuai.test_okhttp.entity.TestMessage;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -16,6 +16,13 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -30,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView image2;
     private ImageView image3;
     private Button btn3;
+    private ListView listView;
+    private JSONObject jsonObject;
 
 
     @Override
@@ -53,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         image1= (ImageView) findViewById(R.id.image1);
         image2= (ImageView) findViewById(R.id.image2);
         image3= (ImageView) findViewById(R.id.image3);
+
+
+
     }
 
     @Override
@@ -69,8 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResponse(String response, int id) {
                         String date=response;
-                        TextView tv=new TextView(MainActivity.this);
-                        tv.setText(date+"");
+
 
                     }
                 });
@@ -78,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn1://使用loadimage的方法加载图片
                 Gson gson = new Gson();
-                test_Gson t=gson.fromJson(josnStr,test_Gson.class);
+                TestMessage t=gson.fromJson(josnStr,TestMessage.class);
                 ImageSize mimageSize=new ImageSize(100,100);
                 String str=t.getBody().getDesigners().get(0).getSAvatar();//url
                 /*ImageLoader.getInstance().loadImage(str, new ImageLoadingListener() {
@@ -121,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn2:
                 Gson gson1 = new Gson();
-                test_Gson t1=gson1.fromJson(josnStr,test_Gson.class);
-                ImageSize mimageSize1=new ImageSize(100,100);
+                TestMessage t1=gson1.fromJson(josnStr,TestMessage.class);
+                //ImageSize mimageSize1=new ImageSize(100,100);
                 String str1=t1.getBody().getDesigners().get(1).getSAvatar();//url
                 DisplayImageOptions options3 = new DisplayImageOptions.Builder()
                         .cacheInMemory(true)
@@ -135,6 +146,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn3:
+                try {
+                    jsonObject=new JSONObject(josnStr);
+                    JSONArray aNews=new JSONArray(jsonObject.getString("designers"));
+                    List listDate=new ArrayList();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
 
                 break;
         }

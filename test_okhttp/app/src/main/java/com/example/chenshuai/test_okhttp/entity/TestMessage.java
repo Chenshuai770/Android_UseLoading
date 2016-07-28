@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by chenshuai on 2016/7/26.
  */
-public class test_Gson {//逢{}创建class，字段用方法（）
+public class TestMessage {//逢{}创建class，字段用方法（）
 
     /**
      * respCode : 00
